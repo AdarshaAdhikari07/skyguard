@@ -8,7 +8,7 @@ import seaborn as sns
 # ==========================================
 # 1. APP CONFIGURATION
 # ==========================================
-st.set_page_config(page_title="Baggage Inspection Task", page_icon="", layout="centered")
+st.set_page_config(page_title="Baggage Inspection Task", page_icon="🛡️", layout="centered")
 
 # ==========================================
 # 2. SESSION STATE MANAGEMENT
@@ -80,19 +80,14 @@ def restart_game():
 # 6. SYSTEM VERIFICATION (MONTE CARLO)
 # ==========================================
 def run_system_verification():
-    """
-    Automated Audit: Runs 10,000 trials to prove 
-    AI Reliability = 85% and Threat Distribution is balanced.
-    """
+    """Automated Audit: Runs 10,000 trials."""
     logs = []
     print("Starting Monte Carlo Simulation...")
     
     progress_bar = st.progress(0)
     
     for i in range(10000):
-        # 1. Simulate Ground Truth (Threat or Safe)
-        # We assume a 50/50 distribution for the audit to check bias, 
-        # or use your app's 30% logic. Let's use 30% to match your game.
+        # 1. Simulate Ground Truth (30% Threat)
         is_threat = random.random() < 0.30
         
         # 2. Simulate AI Advice Logic
@@ -121,97 +116,22 @@ def run_system_verification():
 # ==========================================
 # 5. UI LAYOUT
 # ==========================================
-st.title(" Baggage Inspection Task")
+st.title("🛡️ Baggage Inspection Task")
 
 # --- MAIN MENU ---
 if not st.session_state.game_active and st.session_state.rounds == 0:
-    st.markdown("### Select Operation Mode")
     
-    col1, col2 = st.columns(2)
+    # === [ADDED] MISSION BRIEFING SECTION ===
+    st.markdown("### 📋 Mission Briefing")
+    st.markdown("**Role:** Security Screening Officer | **Objective:** Detect prohibited items.")
     
-    with col1:
-        st.info("👤 **Participant Mode**")
-        
-   
-        st.write("For human data collection.")
-        if st.button("Start Manual Mode"):
-            st.session_state.mode = "Manual"
-            st.session_state.game_active = True
-            generate_bag()
-            st.rerun()
-        if st.button("Start AI-Assisted Mode"):
-            st.session_state.mode = "AI_Assist"
-            st.session_state.game_active = True
-            generate_bag()
-            st.rerun()
-            
-    with col2:
-        st.warning("⚙️ **Developer Mode**")
-        st.write("For algorithmic verification.")
-        if st.button("🛠️ Run System Verification (10k Trials)"):
-            run_system_verification()
-
-    # --- VERIFICATION RESULTS DISPLAY ---
-    if st.session_state.verification_result is not None:
-        df_audit = st.session_state.verification_result
-        
-        st.divider()
-        st.subheader("✅ System Verification Report")
-        
-        # Calculate Metrics
-        total_trials = len(df_audit)
-        ai_accuracy = (df_audit['AI_Correct'].mean()) * 100
-        threat_rate = (df_audit['Ground_Truth'].mean()) * 100
-        
-        # Display Metrics
-        m1, m2, m3 = st.columns(3)
-        m1.metric("Total Automated Trials", f"{total_trials:,}")
-        m2.metric("AI Reliability (Target: 85%)", f"{ai_accuracy:.2f}%")
-        m3.metric("Threat Generation Rate", f"{threat_rate:.2f}%")
-        
-        # Validation Logic
-        if 84.0 < ai_accuracy < 86.0:
-            st.success("PASS: AI Reliability converges to target parameters.")
-        else:
-            st.error("FAIL: AI Reliability is drifting. Check logic.")
-            
-        # Visualization
-        fig, ax = plt.subplots(figsize=(6,2))
-        sns.countplot(y=df_audit['AI_Correct'], palette="coolwarm", ax=ax)
-        ax.set_title("AI Error Distribution (True = 85%, False = 15%)")
-        st.pyplot(fig)
-
-# --- GAME LOOP (Existing Code) ---
-elif st.session_state.game_active:
-    st.progress(st.session_state.rounds / 10, f"Bag {st.session_state.rounds+1}/10")
+    st.markdown("#### ⚠️ TARGET THREATS (LOOK FOR THESE):")
+    # This creates the dark visual bar with emojis
+    threat_html = " ".join([f"<span style='font-size:40px; margin:0 10px;'>{x}</span>" for x in THREAT_ITEMS])
+    st.markdown(
+        f"<div style='background-color: #262730; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px;'>{threat_html}</div>", 
+        unsafe_allow_html=True
+    )
     
-    # Bag Display
-    bag_html = " ".join([f"<span style='font-size:55px; padding:10px;'>{x}</span>" for x in st.session_state.current_bag])
-    st.markdown(f"<div style='background:#111; border:4px solid #444; border-radius:15px; padding:30px; text-align:center;'>{bag_html}</div>", unsafe_allow_html=True)
-
-    # AI Logic (Wizard of Oz)
-    if st.session_state.mode == "AI_Assist":
-        prediction = "THREAT" if st.session_state.has_threat else "CLEAR"
-        # 85% Reliability Check
-        if random.random() > 0.85:
-            prediction = "CLEAR" if prediction == "THREAT" else "THREAT"
-
-        if prediction == "THREAT":
-            st.error(f"🤖 AI ALERT: Threat Detected", icon="⚠️")
-        else:
-            st.success(f"🤖 AI SCAN: Bag Clear", icon="✅")
-
-    c1, c2 = st.columns(2)
-    if c1.button("✅ CLEAR"): 
-        process_decision(False)
-        st.rerun()
-    if c2.button("🚨 THREAT"): 
-        process_decision(True)
-        st.rerun()
-
-else:
-    # --- END SCREEN ---
-    st.success(f"Session Complete. Score: {st.session_state.score}")
-    if st.button("Return to Menu"):
-        restart_game()
-        st.rerun()
+    st.info("⚡ **Performance Metric:** Both SPEED and ACCURACY are tracked.")
+    st.
