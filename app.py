@@ -100,7 +100,7 @@ def restart_game():
 # ==========================================
 # 5. UI LAYOUT
 # ==========================================
-st.title("Baggage Inspection Task")
+st.title("Baggage Threat Detection System")
 
 # ------------------------------------------
 # SCREEN A: MAIN MENU & BRIEFING
