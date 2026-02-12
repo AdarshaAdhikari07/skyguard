@@ -112,7 +112,8 @@ if not st.session_state.game_active and st.session_state.rounds == 0:
     st.markdown("""
     **Role:** Security Screening Officer
     **Objective:** Inspect luggage X-rays for prohibited items.
-    **:** “Please note that you are testing a prototype of an AI assistant for the security checks. It is meant to identify potential threats. Please examine the luggage and decide, based on your own judgment, whether it is safe or not.”.
+    **:** #
+    ("Please note that you are testing a prototype of an AI assistant for the security checks. It is meant to identify potential threats. Please examine the luggage and decide, based on your own judgment, whether it is safe or not").”.
 
     **⚠️ TARGET THREATS (LOOK FOR THESE):**
     """)
