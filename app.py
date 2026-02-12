@@ -8,7 +8,7 @@ import seaborn as sns
 # ==========================================
 # 1. APP CONFIGURATION
 # ==========================================
-st.set_page_config(page_title="Baggage Inspection Task", page_icon="🛡️", layout="centered")
+st.set_page_config(page_title="Baggage Inspection Task", page_icon="", layout="centered")
 
 # ==========================================
 # 2. SESSION STATE MANAGEMENT
@@ -123,7 +123,8 @@ if not st.session_state.game_active and st.session_state.rounds == 0:
     
     # === MISSION BRIEFING ===
     st.markdown("### 📋 Mission Briefing")
-    st.markdown("**Role:** Security Screening Officer | **Objective:** Detect prohibited items.")
+    st.markdown("**Role:** Security Screening Officer | **Objective:** Detect prohibited items.
+   **Note:** You are testing a protoype of an AI assistant for the security checks.It is meant to identify potential threats. PLease examnine the luggage and decide , based on your own judgment, whether it is safe or not)  ")
     
     st.markdown("#### ⚠️ TARGET THREATS (LOOK FOR THESE):")
     # This creates the dark visual bar with emojis
