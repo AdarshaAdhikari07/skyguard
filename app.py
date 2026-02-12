@@ -123,9 +123,9 @@ if not st.session_state.game_active and st.session_state.rounds == 0:
     
     # === MISSION BRIEFING ===
     st.markdown("### 📋 Mission Briefing")
-    st.markdown("**Role:** Security Screening Officer | **Objective:** Detect prohibited items.")  
+    st.markdown("**Role:** Security Screening Officer | **Objective:** Detect prohibited items." 
 
-        ("Please note that you are testing a prototype of an AI assistant for the security checks. It is meant to identify potential threats. Please examine the luggage and decide, based on your own judgment, whether it is safe or not")
+        (**"Please note that you are testing a prototype of an AI assistant for the security checks. It is meant to identify potential threats. Please examine the luggage and decide, based on your own judgment, whether it is safe or not")
     
     st.markdown("#### ⚠️ TARGET THREATS (LOOK FOR THESE):")
     # This creates the dark visual bar with emojis
