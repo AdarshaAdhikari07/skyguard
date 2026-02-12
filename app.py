@@ -116,7 +116,7 @@ def run_system_verification():
 # ==========================================
 # 5. UI LAYOUT
 # ==========================================
-st.title(" Baggage Inspection Task: Research Instrument")
+st.title("🛡️ Baggage Inspection Task")
 
 # --- MAIN MENU ---
 if not st.session_state.game_active and st.session_state.rounds == 0:
@@ -125,7 +125,6 @@ if not st.session_state.game_active and st.session_state.rounds == 0:
     st.markdown("### 📋 Mission Briefing")
     st.markdown("**Role:** Security Screening Officer | **Objective:** Detect prohibited items.")
     
-    # Text block with correct indentation
     st.info("Please note that you are testing a prototype of an AI assistant. It is meant to identify potential threats. Please examine the luggage and decide, based on your own judgment, whether it is safe or not.")
     
     st.markdown("#### ⚠️ TARGET THREATS (LOOK FOR THESE):")
@@ -202,30 +201,6 @@ elif st.session_state.game_active:
     bag_html = " ".join([f"<span style='font-size:55px; padding:10px;'>{x}</span>" for x in st.session_state.current_bag])
     st.markdown(f"<div style='background:#111; border:4px solid #444; border-radius:15px; padding:30px; text-align:center;'>{bag_html}</div>", unsafe_allow_html=True)
 
-    # AI Logic (Wizard of Oz)
-    if st.session_state.mode == "AI_Assist":
-        prediction = "THREAT" if st.session_state.has_threat else "CLEAR"
-        
-        # 85% Reliability Check
-        if random.random() > 0.85:
-            prediction = "CLEAR" if prediction == "THREAT" else "THREAT"
-        
-        # Generate random confidence for realism
-        confidence = random.randint(80, 99)
-
-        if prediction == "THREAT":
-            st.error(f"🤖 AI ALERT: Threat Detected (Confidence: {confidence}%)", icon="⚠️")
-        else:
-            st.success(f"🤖 AI SCAN: Bag Clear (Confidence: {confidence}%)", icon="✅")
-
-# --- GAME LOOP ---
-elif st.session_state.game_active:
-    st.progress(st.session_state.rounds / 10, f"Bag {st.session_state.rounds+1}/10")
-    
-    # Bag Display
-    bag_html = " ".join([f"<span style='font-size:55px; padding:10px;'>{x}</span>" for x in st.session_state.current_bag])
-    st.markdown(f"<div style='background:#111; border:4px solid #444; border-radius:15px; padding:30px; text-align:center;'>{bag_html}</div>", unsafe_allow_html=True)
-
     # --- AI LOGIC & STATUS DISPLAY ---
     if st.session_state.mode == "AI_Assist":
         prediction = "THREAT" if st.session_state.has_threat else "CLEAR"
@@ -243,7 +218,6 @@ elif st.session_state.game_active:
             st.success(f"🤖 AI SCAN: Bag Clear (Confidence: {confidence}%)", icon="✅")
             
     else:
-        
         # Manual Mode Control Condition
         st.warning("📡 AI SYSTEM OFFLINE: Manual Inspection Required", icon="🛑")
 
@@ -254,55 +228,6 @@ elif st.session_state.game_active:
         process_decision(False)
         st.rerun()
         
-    if st.button("🚨 REPORT THREAT", use_container_width=True): 
-        process_decision(True)
-        st.rerun()
-            # --- GAME LOOP ---
-elif st.session_state.game_active:
-    st.progress(st.session_state.rounds / 10, f"Bag {st.session_state.rounds+1}/10")
-    
-    # Bag Display
-    bag_html = " ".join([f"<span style='font-size:55px; padding:10px;'>{x}</span>" for x in st.session_state.current_bag])
-    st.markdown(f"<div style='background:#111; border:4px solid #444; border-radius:15px; padding:30px; text-align:center;'>{bag_html}</div>", unsafe_allow_html=True)
-
-    # --- AI LOGIC & STATUS DISPLAY ---
-    if st.session_state.mode == "AI_Assist":
-        prediction = "THREAT" if st.session_state.has_threat else "CLEAR"
-        
-        # 85% Reliability Check
-        if random.random() > 0.85:
-            prediction = "CLEAR" if prediction == "THREAT" else "THREAT"
-        
-        # Generate random confidence for realism
-        confidence = random.randint(80, 99)
-
-        if prediction == "THREAT":
-            st.error(f"🤖 AI ALERT: Threat Detected (Confidence: {confidence}%)", icon="⚠️")
-        else:
-            st.success(f"🤖 AI SCAN: Bag Clear (Confidence: {confidence}%)", icon="✅")
-            
-  
-
-    # --- DECISION BUTTONS ---
-    st.write("") # Spacer
-    
-    if st.button("✅ CLEAR BAG", type="primary", use_container_width=True): 
-        process_decision(False)
-        st.rerun()
-        
-    if st.button("🚨 REPORT THREAT", use_container_width=True): 
-        process_decision(True)
-        st.rerun()
-
-    # --- STACKED BIG BUTTONS (FIXED) ---
-    st.write("") # Spacer
-    
-    # 1. Clear Bag (Green/Primary Style)
-    if st.button("✅ CLEAR BAG", type="primary", use_container_width=True): 
-        process_decision(False)
-        st.rerun()
-        
-    # 2. Report Threat (Red/Secondary Style)
     if st.button("🚨 REPORT THREAT", use_container_width=True): 
         process_decision(True)
         st.rerun()
@@ -336,7 +261,7 @@ else:
         
         st.divider()
         csv = df.to_csv(index=False).encode('utf-8')
-        st.download_button("📥 Download Full Dataset (CSV)", csv, "BaggageInspection.csv", "text/csv")
+        st.download_button("📥 Download Full Dataset (CSV)", csv, "skyguard_data.csv", "text/csv")
     
     if st.button("🔄 Return to Main Menu"):
         restart_game()
